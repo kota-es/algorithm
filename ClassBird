@@ -1,0 +1,33 @@
+require 'digest/md5'
+
+class Bird
+  attr_accessor :name
+
+  private
+  def digest(food)
+    d = Digest::MD5.new
+    d << food
+    d << name
+    d.hexdigest
+  end
+end
+
+class Crow < Bird
+  def eat(food)
+    if food.kind_of?(String) && food.match(/^edible:/)
+      digest(food.reverse)
+    else
+      food
+    end
+  end
+end
+
+class Duck < Bird
+  def eat(food)
+    if food.kind_of?(String) && food.match(/^edible:/)
+      digest(food.upcase)
+    else
+      food
+    end
+  end
+end
